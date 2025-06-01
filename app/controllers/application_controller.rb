@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
 
   # リクエストヘッダーからユーザーのロケールを推測して返す処理
   def extract_locale_from_accept_language_header
-    lang = request.env['HTTP_ACCEPT_LANGUAGE']&.scan(/^[a-z]{2}/)&.first
+    lang = request.env["HTTP_ACCEPT_LANGUAGE"]&.scan(/^[a-z]{2}/)&.first
     I18n.available_locales.map(&:to_s).include?(lang) ? lang : nil
   end
 end

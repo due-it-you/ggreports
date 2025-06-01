@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   # "/"にアクセスがあった時に、アクセスしてきたブラウザの設定言語からリダイレクトを判断する
-  root to: 'application#redirect_by_locale'
+  root to: "application#redirect_by_locale"
   scope "(:locale)", locale: /#{I18n.available_locales.map(&:to_s).join('|')}/ do
-    namespace :league_of_legends, path: 'lol' do
+    namespace :league_of_legends, path: "lol" do
       root to: "top#index"
     end
     # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
