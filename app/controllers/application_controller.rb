@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   private
-  
+
   def switch_locale(&action)
     I18n.with_locale(locale, &action)
   end

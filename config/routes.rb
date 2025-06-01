@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  scope '(:locale)', locale: /#{I18n.available_locales.map(&:to_s).join('|')}/ do
+  scope "(:locale)", locale: /#{I18n.available_locales.map(&:to_s).join('|')}/ do
     # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
     # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
