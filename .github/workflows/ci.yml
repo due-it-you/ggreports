@@ -3,12 +3,65 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [ main ]
 
 jobs:
-  scan_ruby:
+  rspec:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image:  postgres:16
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ggreports_test
 
+    steps:
+      # 1. リポジトリの最新コードを CI 環境にクローン（チェックアウト）する
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. CI 環境に必要な Ruby バージョンをセットアップする
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+
+      # 3. Node.js の依存関係（node_modules）をキャッシュして、再インストールを高速化する
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+                      ${{ runner.os }}-node-
+
+      # 4. 必要な Ruby の依存関係をインストールする
+      - name: Bundler and gem install
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3 --path vendor/bundle
+
+      # 5. テスト用のデータベースを作成し、マイグレーションを実行する
+      - name: Database create and migrate
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bundle exec rails db:create RAILS_ENV=test
+          bundle exec rails db:migrate RAILS_ENV=test
+
+      - name: Install JS dependencies
+        run: yarn install
+
+      - name: Build JavaScript with esbuild
+        run: yarn build
+
+      # 6. RSpec を実行する
+      - name: Run rspec
+        run: bundle exec rspec
+  
+  rubocop:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -19,21 +72,11 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
+      - name: Bundler and gem install
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3 --path vendor/bundle
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Lint code for consistent style
-        run: bin/rubocop -f github
+      - name: Run rubocop
+        run: bundle exec rubocop
 
