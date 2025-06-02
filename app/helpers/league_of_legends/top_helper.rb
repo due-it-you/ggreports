@@ -1,0 +1,2 @@
+module LeagueOfLegends::TopHelper
+end
