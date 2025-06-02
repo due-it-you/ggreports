@@ -51,8 +51,8 @@ jobs:
           bundle exec rails db:migrate RAILS_ENV=test
 
       - name: Build JavaScript with esbuild
-        run: ./bin/build
-        
+        run: yarn build
+
       # 6. RSpec を実行する
       - name: Run rspec
         run: bundle exec rspec
