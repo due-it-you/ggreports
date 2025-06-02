@@ -13,9 +13,9 @@ jobs:
         ports:
           - 5432:5432
         env:
-        POSTGRES_USER: user
-        POSTGRES_PASSWORD: postgres
-        POSTGRES_DB: ggreports_test
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ggreports_test
 
     steps:
       # 1. リポジトリの最新コードを CI 環境にクローン（チェックアウト）する
