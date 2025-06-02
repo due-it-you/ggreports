@@ -16,4 +16,12 @@ RSpec.describe 'トップページ', type: :feature do
       expect(current_path).to eq('/ja/lol')
     end
   end
+
+  context '許可されていない言語からアクセスがあった場合' do
+    it 'デフォルトのリダイレクト先として設定されている/en/lolにリダイレクトされる' do
+      page.driver.header 'Accept-Language', 'nil'
+      visit root_path
+      expect(current_path).to eq('/en/lol')
+    end
+  end
 end
