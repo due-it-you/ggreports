@@ -82,6 +82,6 @@ test:
 #
 production:
   <<: *default
-  database: ggreports_production
-  username: ggreports
-  password: <%= ENV["GGREPORTS_DATABASE_PASSWORD"] %>
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
