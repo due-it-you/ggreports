@@ -50,6 +50,9 @@ jobs:
           bundle exec rails db:create RAILS_ENV=test
           bundle exec rails db:migrate RAILS_ENV=test
 
+      - name: Install JS dependencies
+        run: yarn install
+
       - name: Build JavaScript with esbuild
         run: yarn build
 
