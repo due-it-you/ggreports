@@ -20,7 +20,7 @@ jobs:
     steps:
       # 1. リポジトリの最新コードを CI 環境にクローン（チェックアウト）する
       - name: Checkout code
-        uses: actions/checkout@4
+        uses: actions/checkout@v4
 
       # 2. CI 環境に必要な Ruby バージョンをセットアップする
       - name: Set up Ruby
@@ -58,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@4
+        uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
