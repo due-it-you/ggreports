@@ -50,10 +50,9 @@ jobs:
           bundle exec rails db:create RAILS_ENV=test
           bundle exec rails db:migrate RAILS_ENV=test
 
-      # ビルド
-      - name: Build JS with esbuild
-        run: bin/rails assets:build
-
+      - name: Build JavaScript with esbuild
+        run: ./bin/build
+        
       # 6. RSpec を実行する
       - name: Run rspec
         run: bundle exec rspec
