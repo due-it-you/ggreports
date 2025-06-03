@@ -1,4 +1,8 @@
 <div>
-  <h1 class="font-bold text-4xl">LeagueOfLegends::Top#index</h1>
-  <p>Find me in app/views/league_of_legends/top/index.html.erb</p>
+  <div>Top Page</div>
+  <div>
+    <%= form_with url: league_of_legends_summoners_path, method: :post do |f| %>
+      <%= f.text_field :name, placeholder: 'player name + #NA1' %>
+    <% end %>
+  </div>
 </div>
