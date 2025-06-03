@@ -8,6 +8,7 @@ class LeagueOfLegends::SummonersController < ApplicationController
   
     # 入力されたサモナーのpuuidの取得
     platform_routing_value = "na1.api.riotgames.com"
+    platform = platform_routing_value.split('.').first
     regional_routing_value = "americas.api.riotgames.com"
     api = "/riot/account/v1/accounts/by-riot-id/#{name}/#{tagline}?api_key=#{ENV['RIOT_DEVELOPMENT_API']}"
     uri = URI.parse("https://#{regional_routing_value}#{api}")
