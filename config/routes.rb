@@ -4,9 +4,7 @@ Rails.application.routes.draw do
   scope "(:locale)", locale: /#{I18n.available_locales.map(&:to_s).join('|')}/ do
     namespace :league_of_legends, path: "lol" do
       root to: "top#index"
-      resources :searched_players, only: %i[ create ] do
-        resources :matches, only: %i[ index ]
-      end
+      resources :searched_players, only: %i[ create show ]
     end
     # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
