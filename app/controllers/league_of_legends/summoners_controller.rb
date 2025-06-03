@@ -18,17 +18,21 @@ class LeagueOfLegends::SummonersController < ApplicationController
       http.request(request)
     end
     summoner_data = JSON.parse(response_data.body)
-    binding.pry
 
-    summoner = Summoner.new({
-                    name: summoner_data["gameName"],
-                    tagline: summoner_data["tagLine"],
-                    platform: platform,
-                    puuid: summoner_data["puuid"]
-                  })
+    if Summoner.exists?(puuid: summoner_data["puuid"])
+      summoner_id = Summoner.find_by(puuid: summoner_data["puuid"]).id
+      redirect_to league_of_legends_summoner_matches_path(summoner_id: summoner_id)
+    else
+      summoner = Summoner.new({
+                      name: summoner_data["gameName"],
+                      tagline: summoner_data["tagLine"],
+                      platform: platform,
+                      puuid: summoner_data["puuid"]
+                    })
 
-    if summoner.save
-      redirect_to league_of_legends_summoner_matches_path(summoner_id: summoner.id)
+      if summoner.save
+        redirect_to league_of_legends_summoner_matches_path(summoner_id: summoner.id)
+      end
     end
   end
 
