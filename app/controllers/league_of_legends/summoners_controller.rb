@@ -14,6 +14,13 @@ class LeagueOfLegends::SummonersController < ApplicationController
     uri = URI.parse("https://#{regional_routing_value}#{api}")
     response_data = Net::HTTP.get(uri)
     summoner_data = JSON.parse(response_data)
+    
+    Summoner.create({
+      name: summoner_data["gameName"],
+      tagline: summoner_data["tagLine"],
+      platform: platform,
+      puuid: summoner_data["puuid"]
+    })
   end
 
   private
