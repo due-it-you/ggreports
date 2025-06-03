@@ -1,4 +1,4 @@
-class LeagueOfLegends::SearchedPlayersController < ApplicationController
+class LeagueOfLegends::SummonersController < ApplicationController
   def create
   end
 end
