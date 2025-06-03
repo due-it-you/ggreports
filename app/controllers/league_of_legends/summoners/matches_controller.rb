@@ -32,7 +32,15 @@ class LeagueOfLegends::Summoners::MatchesController < ApplicationController
       response_data = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
         http.request(request)
       end
-      @matches << JSON.parse(response_data.body)
+      match = JSON.parse(response_data.body)
+      participant = match["info"]["participants"].find { |p| p["puuid"] == puuid }
+      team_id = participant["teamId"]
+      team_info = match["info"]["teams"].find { |team| team["teamId"] == team_id }
+
+      @matches << {
+        match: match,
+        did_win: team_info["win"]
+      }
     end
   end
 end
