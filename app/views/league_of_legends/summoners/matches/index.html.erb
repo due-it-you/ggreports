@@ -1,1 +1,17 @@
-<div>matches view</div>
+<div>
+  <% @matches.each do |match| %>
+    <% if match[:did_win] %>
+      <div>
+        <div class="border border-black rounded-3xl text-green-300 p-2" match-id="<%= match[:match]["metadata"]["matchId"] %>">
+          <%= match[:match]["info"]["gameMode"] %>
+          Victory
+        </div>
+      </div>
+    <% else %>
+      <div class="border border-black rounded-3xl text-red-300 p-2" match-id="<%= match[:match]["metadata"]["matchId"] %>">
+        <%= match[:match]["info"]["gameMode"] %>
+        Defeat
+      </div>
+    <% end %>
+  <% end %>
+</div>
