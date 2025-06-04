@@ -1,17 +1,21 @@
 <div>
-  <% @matches.each do |match| %>
-    <% if match[:did_win] %>
-      <div>
-        <div class="border border-black rounded-3xl text-green-300 p-2" match-id="<%= match[:match]["metadata"]["matchId"] %>">
-          <%= match[:match]["info"]["gameMode"] %>
-          Victory
+  <div data-controller="match-card">
+    <% @matches.each do |match| %>
+      <% if match[:did_win] %>
+        <div data-action="click->match-card#navigate">
+          <div class="border border-black rounded-3xl text-green-300 p-2" match-id="<%= match[:match]["metadata"]["matchId"] %>">
+            <%= match[:match]["info"]["gameMode"] %>
+            Victory
+          </div>
         </div>
-      </div>
-    <% else %>
-      <div class="border border-black rounded-3xl text-red-300 p-2" match-id="<%= match[:match]["metadata"]["matchId"] %>">
-        <%= match[:match]["info"]["gameMode"] %>
-        Defeat
-      </div>
+      <% else %>
+        <div data-action="click->match-card#navigate">
+          <div class="border border-black rounded-3xl text-red-300 p-2" match-id="<%= match[:match]["metadata"]["matchId"] %>">
+            <%= match[:match]["info"]["gameMode"] %>
+            Defeat
+          </div>
+        </div>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 </div>
